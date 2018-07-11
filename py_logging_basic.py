@@ -24,14 +24,63 @@ DEFAULT_LOGGING = {
             'handlers': ['default'],
             'propagate': True
         }
-        ''',
-        # Optional levels for specific libraries
-        'requests.packages.urllib3.connectionpool': {
-            'level': 'ERROR',
+logLevel = 'INFO'
+
+DEFAULT_LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            #'format': '[%(asctime)s] [PID:%(process)d TID:%(thread)d] [%(levelname)s] [%(name)s] [%(funcName)s():%(lineno)s] %(message)s'
+            'format': '[%(asctime)s] %(message)s'
+        },
+    },
+    'handlers': {
+        'default': {
+            'level': logLevel,
+            'formatter': 'standard',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        '': {
+            'level': logLevel,
             'handlers': ['default'],
             'propagate': True
         }
-        '''
+logLevel = 'INFO'
+
+DEFAULT_LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            #'format': '[%(asctime)s] [PID:%(process)d TID:%(thread)d] [%(levelname)s] [%(name)s] [%(funcName)s():%(lineno)s] %(message)s'
+            'format': '[%(asctime)s] %(message)s'
+        },
+    },
+    'handlers': {
+        'default': {
+            'level': logLevel,
+            'formatter': 'standard',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        '': {
+            'level': logLevel,
+            'handlers': ['default'],
+            'propagate': True
+        }
+#===============================================================================
+#         ,
+#         # Optional levels for specific libraries
+#         'requests.packages.urllib3.connectionpool': {
+#             'level': 'ERROR',
+#             'handlers': ['default'],
+#             'propagate': True
+#         }
+#===============================================================================
     }
 }
 
