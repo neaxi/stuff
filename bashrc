@@ -53,3 +53,9 @@ fi
 # set the proxy variables whenever you start the shell
 export http_proxy=http://proxy:8080
 export https_proxy=https://proxy:8080
+
+
+# fortune cookies with a random cow
+if [ -x /usr/games/cowsay -a -x /usr/games/fortune ]; then
+    fortune -s | cowsay -f `ls -1 /usr/share/cowsay/cows/ | sort -R | head -1` -n
+fi
