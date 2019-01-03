@@ -1,0 +1,159 @@
+<html>
+<head><meta charset="UTF-8"></head>
+<body>
+
+<p>
+<script>
+// the TSV data from Excel goes into this variable
+var tsvData = `
+
+date	track	link	attr-len	attr-up	attr-down	notes
+2018-33-99	Blava - Wien - Pest	https://en.mapy.cz/s/3iNRz	325.8	1229	1286	Highway trip
+9999-00-11	Praha - Psonsko - Brun	https://en.mapy.cz/s/3iNRU	599.3	6308	6305	triangle
+0000-11-11	Frankfurt - Berlin	https://goo.gl/maps/25QEZFML8Vv	549	?	?	Que?
+
+`;
+</script>
+
+<style>
+table {border-spacing: 2px; border-collapse: collapse;}
+thead {background-color: #555555; font-weight: bold; text-align: center;}
+tbody {width: 30%}
+td {padding-left: 10px; padding-right: 10px;}
+tbody tr:hover {background-color: #999999;}
+.hcenter {text-align: center;}
+</style>
+
+<script id="template-tr-gen" type="text/template">
+<tr>
+<td class="hcenter">{{date}}</td>
+<td>{{track}}</td>
+<td>{{link}}</td>
+<td class="hcenter">{{attr-len}}</td>
+<td class="hcenter">{{attr-up}}</td>
+<td class="hcenter">{{attr-down}}</td>
+<td>{{notes}}</td>
+</tr>
+</script>
+
+</p><table border="1">
+<thead>
+<tr>
+<td>Date</td>
+<td>Track</td>
+<td>Link</td>
+<td class="hcenter">[km]</td>
+<td class="hcenter">↑[m]</td>
+<td class="hcenter">↓[m]</td>
+<td>Notes</td>
+</tr>
+</thead>
+<tbody id="tableContent">
+</tbody>
+</table>
+<br><br>
+
+
+<script>
+// https://jonsuh.com/blog/javascript-templating-without-a-library/
+function templating(dataObject) {
+    // Find the template and load its HTML as a string
+    var template = document.getElementById("template-tr-gen");
+    var templateHtml = template.innerHTML;
+    // Final HTML variable as empty string
+    var finalHtml = "";
+
+    // the first item in the dataObject is the list of headers
+    // spliced away as we want them as a variable and not processed by the templating
+    var headers = dataObject.splice(0,1);
+    
+    // Loop through dataObject, replace placeholder tags
+    // with actual data, and generate final HTML
+    for (var key in dataObject) {
+        var tableLines = templateHtml;
+        for(const k of Object.values(headers[0])){
+            // RegExp notation used to allow variable when replacing
+            if ( k == "link"){
+                tableLines = tableLines.replace(RegExp("{{"+k+"}}","g"), generateLink(dataObject[key][k]));
+            }
+            else {
+                tableLines = tableLines.replace(RegExp("{{"+k+"}}","g"), dataObject[key][k]);
+            }
+        }  
+      finalHtml += tableLines;
+    }
+
+    // Replace the HTML of #tbody with final HTML
+    document.getElementById("tableContent").innerHTML = finalHtml;
+}
+
+
+function generateLink(link){
+    var parts = link.split("/");
+    var linkParams = "target=\"_blank\"";
+    
+    if (link.includes("mapy.cz")) {
+        return "<a href=\"" + link + "\" " + linkParams + ">M: " + parts[parts.length-1] + "</a>";
+    } else if (link.includes("goo.gl")) {
+        return "<a href=\"" + link + "\" " + linkParams + ">G: " + parts[parts.length-1] + "</a>";
+    }
+    else {
+        return "<a href=\"" + link + "\" " + linkParams + ">link</a>";
+    }
+}
+
+
+// var tsv is the TabSeparatedVariable file with headers
+// https://gist.github.com/iwek/7154706
+function tsvJSON(tsv){
+      // split the TSV data by newlines
+      var lines = tsv.split("\n");
+      var headers = lines[0].split("\t");
+      var result = [];
+      // append list of headers to the result
+      result.push(headers)
+
+      for(var i=1; i < lines.length; i++){
+          var obj = {};
+          var currentline = lines[i].split("\t");
+          // header items as keys for values on each of the lines
+          for(var j=0; j < headers.length; j++){
+              obj[headers[j]] = currentline[j];
+          }
+          result.push(obj);
+      }
+      
+      //return result; //JavaScript object
+      return JSON.stringify(result); //JSON
+}
+
+
+// cleanup all empty lines in the multiline string
+// https://stackoverflow.com/questions/16369642/javascript-how-to-use-a-regular-expression-to-remove-blank-lines-from-a-string
+function removeEmptyLines(multiString){
+    // removes blank lines inside of the string and then whitespace at the end using .trimRight()
+    multiString = multiString.replace(/^\s*$(?:\r\n?|\n)/gm, '');
+    multiString = multiString.trimRight();
+    return multiString;
+}
+
+var jsonPayload = tsvJSON(removeEmptyLines(tsvData));
+templating(JSON.parse(jsonPayload));
+
+
+/*
+HOW IT WORKS:
+1. TSV data are taken from the tsvData variable on top of the file
+2. tsvJSON() parses the data and returns JSON valid string
+3. string is parsed with JSON.parse() and passed as JavaScript object to templating() engine
+4. templating takes list of the headers from first line of the JSON data
+5. lines are template replaced based on the headers/key values - id="template-tr-gen"
+6. content of <tbody id="tableContent"> if filled with the generated HTML data
+*/
+
+</script>
+
+<p></p><p><br></p><p><br></p>
+
+</body>
+</html>
