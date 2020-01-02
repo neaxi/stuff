@@ -45,3 +45,15 @@ Windows Registry Editor Version 5.00
 ; https://superuser.com/questions/1372434/disable-absolute-volume-in-windows-10-bluetooth-stack
 [HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\Bluetooth\Audio\AVRCP\CT]
 "DisableAbsoluteVolume"=dword:00000001
+
+; Enable hibernation in the Start menu // might be already enabled by DISM setup script mentioned above
+; YES - you can do it through the GUI without a need for Admin rights
+; I'm not going to click on X different places when i can do the same at once with a registry import
+; https://www.winhelponline.com/blog/restore-hibernate-option-winx-menu-windows-8-10/
+; https://www.top-password.com/blog/2-options-to-enable-disable-hibernate-in-windows-10/
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Power]
+"HibernateEnabled"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FlyoutMenuSettings]
+"ShowSleepOption"=dword:00000001
+"ShowHibernateOption"=dword:00000001
