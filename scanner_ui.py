@@ -1,3 +1,7 @@
+# utility for a desktop scanner automation
+# wia-cmd-scanner utility needed: https://github.com/nagimov/wia-cmd-scanner/releases
+# provides one-click interface for desktop scanner operations, ie BFU photo scanning, etc...
+
 import os
 import time
 import datetime
