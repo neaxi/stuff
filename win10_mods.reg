@@ -4,6 +4,10 @@ Windows Registry Editor Version 5.00
 ; This file server as mine go-to storage with all of them in one place
 ; To be executed once you run the system over with https://github.com/Disassembler0/Win10-Initial-Setup-Script
 
+; build number on the Desktop
+; https://www.howtogeek.com/58298/stupid-geek-tricks-how-to-display-the-windows-version-on-the-desktop/
+[HKEY_CURRENT_USER\Control Panel\Desktop]
+"PaintDesktopVersion"=dword:00000001
 
 ; Turn off thumbnails on Alt+Tab
 ; https://superuser.com/questions/114001/getting-back-the-old-alt-tab-windows-switching-behavior-in-windows-7
@@ -57,3 +61,15 @@ Windows Registry Editor Version 5.00
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FlyoutMenuSettings]
 "ShowSleepOption"=dword:00000001
 "ShowHibernateOption"=dword:00000001
+
+; Cortana sabotage
+; https://www.ghacks.net/2015/06/23/how-to-disable-web-search-in-windows-10s-start-menu/
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search]
+"AllowCortana"=dword:00000000
+"ConnectedSearchUseWeb"=dword:00000000
+
+; Dell screwed up their touchpad application - available only through MS Store in Win 10 
+; The only change I need is to have touchpad middle button behaving like middle click
+; I'm not going to install MS Store and Alps aplication just because of this one small change
+[HKEY_CURRENT_USER\Software\Alps\Apoint\Button]
+"SPFunction3"=dword:0000000e
