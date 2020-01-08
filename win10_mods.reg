@@ -86,7 +86,7 @@ Windows Registry Editor Version 5.00
 ; SPFunction1 = Left button
 ; SPFunction2 = Right button
 ; SPFunction3 = Middle button
-; if Run (0x1b is set, path to .exe to be launched is stored in AppRegSP3)
+; if Run (0x1b) is set, path to .exe to be launched is stored in AppRegSP3
 
 ; Click = 0x5
 ; Shortcut = 0x4
@@ -97,3 +97,9 @@ Windows Registry Editor Version 5.00
 ; Do nothing = 0x0
 [HKEY_CURRENT_USER\Software\Alps\Apoint\Button]
 "SPFunction3"=dword:0000000e
+
+; invert scrolling 
+; 0x0 = on
+; 0x3 = off
+[HKEY_CURRENT_USER\Software\Alps\Apoint]
+"InvertScrollFlag"=dword:00000000
