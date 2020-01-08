@@ -9,10 +9,12 @@ Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\Control Panel\Desktop]
 "PaintDesktopVersion"=dword:00000001
 
+
 ; Turn off thumbnails on Alt+Tab
 ; https://superuser.com/questions/114001/getting-back-the-old-alt-tab-windows-switching-behavior-in-windows-7
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
 "AltTabSettings"=dword:00000001
+
 
 ; Creating Windows CMD aliases
 ; https://superuser.com/questions/1134368/create-permanent-doskey-in-windows-cmd/1294155#1294155
@@ -21,16 +23,19 @@ Windows Registry Editor Version 5.00
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Command Processor]
 "Autorun"="DOSKEY /MACROFILE=\"C:\\Python37\\macros.doskey\""
 
+
 ; Show the missing option in power profile setting
 ; Console lock display off timeout is the amount of minutes Windows will wait idle with no activity while on the lock screen 
 ; https://www.tenforums.com/tutorials/65586-add-console-lock-display-off-timeout-power-options-windows-10-a.html
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Power\PowerSettings\7516b95f-f776-4464-8c53-06167f40cc99\8EC4B3A5-6868-48c2-BE75-4F3044BE88A7]
 "Attributes"=dword:00000002
 
+
 ; Old contact suggestions for new Outlook
 ; https://www.reddit.com/r/Outlook/comments/828erp/disable_suggested_contacts_in_outlook_2016/
 [HKEY_CURRENT_USER\Software\Microsoft\Office\16.0\Outlook\Options]
 "DisableAutoCompleteUpdate"=dword:00000001
+
 
 ; To prevent F1 from opening Bing search
 ; https://www.winhelponline.com/blog/disable-f1-key-help-windows-10/
@@ -40,15 +45,18 @@ Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\SOFTWARE\Classes\Typelib\{8cec5860-07a1-11d9-b15e-000d56bfe6ee}\1.0\0\win64]
 @=""
 
+
 ; Get back old volume control with the 'Mixer' button instead of having it under RMB
 ; http://www.tenforums.com/tutorials/7948-volume-control-old-new-windows-10-a.html
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\MTCUVC]
 "EnableMtcUvc"=dword:00000000
 
+
 ; Windows 10 introduced update 1803, which changed the volume control for bluetooth devices - After the update both volumes are now linked and change together.
 ; https://superuser.com/questions/1372434/disable-absolute-volume-in-windows-10-bluetooth-stack
 [HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\Bluetooth\Audio\AVRCP\CT]
 "DisableAbsoluteVolume"=dword:00000001
+
 
 ; Enable hibernation in the Start menu // might be already enabled by DISM setup script mentioned above
 ; YES - you can do it through the GUI without a need for Admin rights
@@ -62,14 +70,30 @@ Windows Registry Editor Version 5.00
 "ShowSleepOption"=dword:00000001
 "ShowHibernateOption"=dword:00000001
 
+
 ; Cortana sabotage
 ; https://www.ghacks.net/2015/06/23/how-to-disable-web-search-in-windows-10s-start-menu/
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search]
 "AllowCortana"=dword:00000000
 "ConnectedSearchUseWeb"=dword:00000000
 
+
 ; Dell screwed up their touchpad application - available only through MS Store in Win 10 
 ; The only change I need is to have touchpad middle button behaving like middle click
 ; I'm not going to install MS Store and Alps aplication just because of this one small change
+
+; SP = pointstick / trackpoint buttons
+; SPFunction1 = Left button
+; SPFunction2 = Right button
+; SPFunction3 = Middle button
+; if Run (0x1b is set, path to .exe to be launched is stored in AppRegSP3)
+
+; Click = 0x5
+; Shortcut = 0x4
+; Middle button = 0xe
+; Double Click = 0x9
+; Run = 0x1b
+; Stick scroll = 0x10
+; Do nothing = 0x0
 [HKEY_CURRENT_USER\Software\Alps\Apoint\Button]
 "SPFunction3"=dword:0000000e
