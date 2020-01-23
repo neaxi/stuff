@@ -63,8 +63,13 @@ Windows Registry Editor Version 5.00
 ; I'm not going to click on X different places when i can do the same at once with a registry import
 ; https://www.winhelponline.com/blog/restore-hibernate-option-winx-menu-windows-8-10/
 ; https://www.top-password.com/blog/2-options-to-enable-disable-hibernate-in-windows-10/
+
+; also disable "Connected Standby" because i hate when the computer keeps running when i put it to sleep
+; https://techjourney.net/how-to-disable-connected-standby-instantgo-in-windows-10-8-1-8/
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Power]
 "HibernateEnabled"=dword:00000001
+"CsEnabled"=dword:00000000
+
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FlyoutMenuSettings]
 "ShowSleepOption"=dword:00000001
