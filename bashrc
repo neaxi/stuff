@@ -19,13 +19,32 @@ if ! shopt -oq posix; then
   fi
 fi
 
+build_prompt() {
+    # red if root, green if other
+    if [[ ${EUID} == 0 ]] ; then
+            clr='31'
+    else
+            clr='32'
+    fi
 
-# PS1 Prompt \A \u@\h:\w $ 
-# Green for user
-PS1='\[\e[0;32m\]\A\[\e[m\] \[\e[0;32m\]\u@\h\[\e[m\]:\[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[0;37m\]'
+    time='\[\e[0;${clr}m\]\A\[\e[m\] '                    # red timestamp
+    chroot='${debian_chroot:+($debian_chroot)}'           # show if we're in chroot
+    #user='\[\e[${clr}m\]\u@\[\e[m\]'                      # current user / green
+    hostname='\[\e[1;${clr}m\]\h\[\e[m\]:'                # hostname
+    cwd='\[\e[01;34m\]\w\[\e[m\]'                         # current work dir
+    git='\[\e[1;33m\]$(__git_ps1)\[\e[m\] '               # git branch
+    prompt='\[\e[1;${clr}m\]\$\[\e[m\] '                  # actual prompt
+    
+    out=$time$chroot$user$hostname$cwd$git$prompt
+    
+    export PS1=$out
+}
 
-# Red for /root/.bashrc
-# PS1='${debian_chroot:+($debian_chroot)}\[\e[0;31m\]\A\[\e[m\] \[\033[01;31m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+if [ "$color_prompt" = yes ]; then
+    build_prompt
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
 
 PATH=/usr/sbin:/sbin:/usr/etc:$PATH
 export PS1 PATH
