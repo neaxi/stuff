@@ -14,6 +14,9 @@ DEFAULT_LOGGING = {
     'formatters': {
         'standard': {
             'format': '[%(asctime)s] [%(levelname)s] %(message)s'
+        },
+        'extensive': {
+            'format': '[%(asctime)s] [PID:%(process)d TID:%(thread)d] [%(levelname)s] [%(name)s] [%(funcName)s():%(lineno)s] %(message)s'
         }
     },
     'handlers': {
@@ -29,12 +32,24 @@ DEFAULT_LOGGING = {
             'filename': RUNTIME_LOG,
             'mode': 'w',
         },
+        'default_extensive': {
+            'level': logScreenLevel,
+            'formatter': 'extensive',
+            'class': 'logging.StreamHandler',
+        }
     },
     'loggers': {
         '': {
             'level': logFileLevel,
             'handlers': ['default', 'file'],
             'propagate': True
-        }
+        },
+         # Optional levels for specific imports/libraries; 
+         # submodule_specific_import.py
+         'submodule_specific_import': {
+             'level': 'ERROR',
+             'handlers': ['default_extensive'],
+             #'propagate': True
+         }
     }
 }
