@@ -14,7 +14,7 @@ args = parser.parse_args()
 # LOGGER SETUP
 logging.basicConfig()    # create default root logger
 logging.config.dictConfig(DEFAULT_LOGGING)    # load configuration
-logging.getLogger().handlers[0].setLevel(args.log_level)    # console logger handler is set to level dictated by CLI args
+logging.getLogger().handlers[0].setLevel(args.log_level)    # [0] == StreamHandler is set to level dictated by CLI args
 logger = logging.getLogger(__name__)
 
 
@@ -35,3 +35,8 @@ logger.info('\n'+'-'*50)
 logger.debug('Second round with more detailed/extensive log applied on specific import')
 logger.info('Testing message levels.. round 2:\n'+'-'*50)
 submodule_specific_import.test_logger_message_levels()
+submodule_specific_import.test_exception()
+
+
+
+logger.debug('Thats all folks')
