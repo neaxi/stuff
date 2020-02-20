@@ -4,6 +4,9 @@ import submodule_x
 import submodule_specific_import
 import setup_cli_args
 
+
+
+
 import logging.config 
 from setup_logging import DEFAULT_LOGGING
 
@@ -19,6 +22,15 @@ logger = logging.getLogger(__name__)
 
 
 
+
+
+
+
+
+
+
+
+####### BEHAVIOUR TESTS
 
 
 
@@ -38,5 +50,7 @@ submodule_specific_import.test_logger_message_levels()
 submodule_specific_import.test_exception()
 
 
-
+# sleep added to distinguish last logged message by a timestamp
+from time import sleep
+sleep(1)
 logger.debug('Thats all folks')

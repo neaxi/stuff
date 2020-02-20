@@ -25,37 +25,51 @@ DEFAULT_LOGGING = {
             'datefmt': date_format
         }
     },
+    'loggers': {
+         # Optional levels for specific imports/libraries; 
+         # submodule_specific_import.py
+         'submodule_specific_import': {
+             'level': 'INFO',
+             'handlers': ['stdio_extensive'],
+             # propagate attribute is True for a Logger instance by default
+             'propagate': False
+         },
+        '': {
+            'level': log_file_level,
+            'handlers': ['stdio_default', 'file'],
+            'propagate': True
+        },
+    },    
     'handlers': {
-        'default': {
+        'stdio_default': {
             'level': log_screen_level,
             'formatter': 'standard',
             'class': 'logging.StreamHandler',
         },
+        'stdio_extensive': {
+            'level': log_screen_level,
+            'formatter': 'extensive',
+            'class': 'logging.StreamHandler',
+        },        
         'file': {
             'level': log_file_level,
             'formatter': 'standard',
             'class': 'logging.FileHandler',
             'filename': RUNTIME_LOG,
+            # 'a' = append 
+            # 'w' = write, overwrites current content
             'mode': 'w',
         },
-        'default_extensive': {
-            'level': log_screen_level,
-            'formatter': 'extensive',
-            'class': 'logging.StreamHandler',
-        }
-    },
-    'loggers': {
-        '': {
-            'level': log_file_level,
-            'handlers': ['default', 'file'],
-            'propagate': True
-        },
-         # Optional levels for specific imports/libraries; 
-         # submodule_specific_import.py
-         'submodule_specific_import': {
-             'level': 'ERROR',
-             'handlers': ['default_extensive'],
-             #'propagate': True
-         }
+# If we want to have multiple FileHandlers, they must be 'append'.
+# Otherwise they would overwrite logs from previous FileHandler.
+# Handlers are not running in parallel && aren't process safe ==> AVOID!!
+# details https://realpython.com/python-logging-source-code/#preliminary-2-logging-is-thread-safe-but-not-process-safe
+#        'file_extensive': {
+#            'level': log_screen_level,
+#            'formatter': 'extensive',
+#            'class': 'logging.FileHandler',
+#            'filename': RUNTIME_LOG,
+#            'mode': 'a'
+#        }
     }
 }
