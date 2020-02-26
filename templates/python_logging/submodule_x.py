@@ -2,7 +2,7 @@
 
 # basic setup without any external logger, to make sure we're processing everything by default
 from logging import DEBUG, basicConfig, getLogger
-basicConfig(format='%(name)s: %(message)s', level=DEBUG)
+basicConfig(format='[%(levelname)s] %(name)s: %(message)s', level=DEBUG)
 logger = getLogger(__name__)
 
 def test_logger_message_levels():

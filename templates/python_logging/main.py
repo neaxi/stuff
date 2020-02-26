@@ -1,12 +1,11 @@
 #!/usr/bin/python3
 
+# custom imports
 import submodule_x
 import submodule_specific_import
 import setup_cli_args
 
-
-
-
+# logging imports
 import logging.config 
 from setup_logging import DEFAULT_LOGGING
 
@@ -24,16 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 
-
-
-
-
-
-
 ####### BEHAVIOUR TESTS
-
-
-
 logger.info('App started')
 logger.debug('Debugging mode turned on')
 logger.info('Testing message levels:\n'+'-'*50)
