@@ -1,10 +1,9 @@
 #!/usr/bin/python3
 
-# basic setup without any external logger, to make sure we're processing everything by default
-from logging import DEBUG, basicConfig, getLogger
-basicConfig(format='[%(levelname)s] %(name)s: %(message)s', level=DEBUG)
-logger = getLogger(__name__)
+import logging
 
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 def test_logger_message_levels():
     logger.debug('DEBUG level message')
@@ -14,5 +13,12 @@ def test_logger_message_levels():
     logger.critical('CRITICAL level message')
     logger.fatal('FATAL level message')
 
+def test_exception():
+    try:
+        raise ValueError
+    except Exception as e:
+        logger.exception("The exception has raised")
+
 if __name__ == '__main__':
     test_logger_message_levels()
+    test_exception()
