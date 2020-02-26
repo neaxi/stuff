@@ -14,7 +14,6 @@ parser = setup_cli_args.setup_parser()
 args = parser.parse_args()
 
 # LOGGER SETUP
-logging.basicConfig()    # create default root logger
 logging.config.dictConfig(DEFAULT_LOGGING)    # load configuration
 logging.getLogger().handlers[0].setLevel(args.log_level)    # [0] == StreamHandler is set to level dictated by CLI args
 logger = logging.getLogger(__name__)

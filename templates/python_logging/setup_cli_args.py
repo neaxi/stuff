@@ -20,6 +20,5 @@ def setup_parser():
         action='store_const', dest='log_level', const=DEBUG,
         default=INFO,
     )
-    
-    return parser 
 
+    return parser

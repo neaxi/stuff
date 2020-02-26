@@ -1,14 +1,23 @@
 #!/usr/bin/python3
 import os
 
+# CONSTANTS
 log_level_screen = 'INFO'
 log_level_file = 'DEBUG'
+log_filename = 'last_execution.log'
 date_format = '%Y-%m-%dT%H:%M:%S%z'    # ISO 8601!!!
 
 
-RUNTIME_LOG = os.path.join(os.path.dirname(__file__), 'last_execution.log')
-if not os.path.join(RUNTIME_LOG):
-    os.mkdir(RUNTIME_LOG)
+# Checks for writing a logfile
+RUNTIME_LOG = os.path.join(os.path.dirname(__file__), log_filename)
+
+# check if the path where we want to store the file exists, create subfolders otherwise
+if not os.path.exists(os.path.dirname(RUNTIME_LOG)):
+    os.makedirs(os.path.dirname(RUNTIME_LOG))
+# check if the name doesn't already exists as a dir
+if os.path.isdir(RUNTIME_LOG):
+    raise Exception('Log path is not a file but a directory: {}'.format(RUNTIME_LOG))
+
 
 DEFAULT_LOGGING = {
     'version': 1,
@@ -28,7 +37,6 @@ DEFAULT_LOGGING = {
     'loggers': {
          # Optional levels for specific imports/libraries;
          # Useful when some of the imported libraries is too talkative
-         # Example: It prints out too much DEBUG info, so you change it to INFO and above, while keeping your app on DEBUG
          # submodule_specific_import.py
          'submodule_specific_import': {
              'level': 'INFO',
