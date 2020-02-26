@@ -70,8 +70,8 @@ fi
 
 
 # set the proxy variables whenever you start the shell
-export http_proxy=http://proxy:8080
-export https_proxy=https://proxy:8080
+#export http_proxy=http://proxy:8080
+#export https_proxy=https://proxy:8080
 
 
 # fortune cookies with a random cow
