@@ -32,13 +32,21 @@ build_prompt() {
     #user='\[\e[${clr}m\]\u@\[\e[m\]'                      # current user / green
     hostname='\[\e[1;${clr}m\]\h\[\e[m\]:'                # hostname
     cwd='\[\e[01;34m\]\w\[\e[m\]'                         # current work dir
-    git='\[\e[1;33m\]$(__git_ps1)\[\e[m\] '               # git branch
+    if command -v git &> /dev/null
+    then
+        git='\[\e[1;33m\]$(__git_ps1)\[\e[m\] '               # git branch
+    else
+        git=''
+    fi
     prompt='\[\e[1;${clr}m\]\$\[\e[m\] '                  # actual prompt
     
     out=$time$chroot$user$hostname$cwd$git$prompt
     
     export PS1=$out
 }
+#color shell
+force_color_prompt=yes
+color_prompt=yes
 
 if [ "$color_prompt" = yes ]; then
     build_prompt
@@ -49,14 +57,12 @@ fi
 PATH=/usr/sbin:/sbin:/usr/etc:$PATH
 export PS1 PATH
 
-#color shell
-force_color_prompt=yes
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=100000
 HISTFILESIZE=200000
 
-
+ 
 # Aliases
 alias ll="ls -l --color=auto"
 alias grep='grep --color=auto'
@@ -72,9 +78,3 @@ fi
 # set the proxy variables whenever you start the shell
 #export http_proxy=http://proxy:8080
 #export https_proxy=https://proxy:8080
-
-
-# fortune cookies with a random cow
-if [ -x /usr/games/cowsay -a -x /usr/games/fortune ]; then
-    fortune -s | cowsay -f `ls -1 /usr/share/cowsay/cows/ | sort -R | head -1` -n
-fi
