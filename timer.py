@@ -4,8 +4,21 @@ import winsound
 import tkinter as tk
 from functools import partial
 
+# config / constants
 TICK_INTERVAL = 1   # seconds
 COUNTDOWNS = [0, 0.1, 0.5, 1, 5, 10, 13, 15, 20, 23]   # minutes
+
+FONT = 'OCR A Extended'
+FONT_SIZE = 26
+DISPLAY_WIDTH = 11
+CLR_BG = 'black'
+CLR_FG = 'red'
+
+# AppGPFault = Windows "Program Failure" system sound alias
+WIN_SOUND = 'AppGPFault'
+
+MSG_WELCOME = 'COUNTDOWN'
+MSG_DONE = '00:00'
 
 
 def sec_to_msg(secs):
@@ -25,7 +38,7 @@ class Countdown():
 
         # initial setup
         self.layout_setup()
-        self.update_display('COUNTDOWN')
+        self.update_display(MSG_WELCOME)
 
     def layout_setup(self):
         ''' setup of the GUI elements and Tk window attributes '''
@@ -33,9 +46,9 @@ class Countdown():
         self.app.attributes('-topmost', True)   # stay on top
 
         self.display = tk.Label(self.app,
-                                font=('OCR A Extended', 26),
-                                bg='black',
-                                fg='red')
+                                font=(FONT, FONT_SIZE),
+                                bg=CLR_BG,
+                                fg=CLR_FG)
         self.display.pack()
 
         # create button for each of the time specified in minutes
@@ -49,19 +62,20 @@ class Countdown():
 
     def update_display(self, msg):
         ''' updates display value and ensures the value is centered '''
-        self.display['text'] = '{:^11}'.format(msg)
+        self.display['text'] = '{:^{width}}'.format(msg, width=DISPLAY_WIDTH)
 
     def done(self):
         ''' action to be performed when countdown hits 0
         AppGPFault = sound Alias for Windows "Program Failure" system sound
         '''
-        self.update_display('Time\'s up!')
-        winsound.PlaySound('AppGPFault', winsound.SND_ALIAS)
+        self.update_display(MSG_DONE)
+        winsound.PlaySound(WIN_SOUND, winsound.SND_ALIAS)
         self.stop()
 
     def stop(self):
         ''' timer reset, including jobs queued by tk.after() '''
         self.counting = False
+        self.update_display(MSG_DONE)
         if self.job:
             self.app.after_cancel(self.job)
             self.job = None
@@ -79,7 +93,7 @@ class Countdown():
                 self.job = self.app.after(int(TICK_INTERVAL * 1000), self.tick)
 
     def btn_time(self, minutes):
-        ''' stop any cuurent countdown and start new if minutes != 0 '''
+        ''' stop any current countdown and start new if minutes != 0 '''
         self.stop()
         if minutes:
             self.timeleft = minutes * 60
