@@ -118,3 +118,14 @@ Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
 "DisallowShaking"=dword:00000001
 "DisablePreviewWindow"=dword:00000001
+
+
+
+; touchpad, disable inverted scrolling  
+; https://appuals.com/how-to-reverse-the-scrolling-direction-in-windows-10/  
+; find VID/PID of the touchpad in powershell  
+; > Get-PnpDevice -Class mouse -PresentOnly | Select-Object FriendlyName, InstanceId  
+;  
+; [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum\[InstanceId]\Device Parameters]  
+; example: [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum\HID\DLL07D0&Col01\5&30ad201a&0&0000]  
+; "FlipFlopWheel"=dword:00000001  
