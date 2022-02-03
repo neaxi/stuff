@@ -69,7 +69,10 @@ Windows Registry Editor Version 5.00
 ; https://techjourney.net/how-to-disable-connected-standby-instantgo-in-windows-10-8-1-8/
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Power]
 "HibernateEnabled"=dword:00000001
-"CsEnabled"=dword:00000000
+;"CsEnabled"=dword:00000000
+; CsEnabled was removed in v2004-May 2020, replaced with PlatformAoAcOverride
+; https://www.reddit.com/r/Dell/comments/h0r56s/getting_back_s3_sleep_and_disabling_modern/
+"PlatformAoAcOverride"=dword:00000000
 
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FlyoutMenuSettings]
@@ -119,6 +122,11 @@ Windows Registry Editor Version 5.00
 "DisallowShaking"=dword:00000001
 "DisablePreviewWindow"=dword:00000001
 
+
+; Disable Edge tabs in Alt+Tab
+; https://winaero.com/how-to-disable-microsoft-edge-tabs-in-alttab-on-windows-11/
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+"MultiTaskingAltTabFilter"=dword:00000003
 
 
 ; touchpad, disable inverted scrolling  
