@@ -23,6 +23,11 @@ Windows Registry Editor Version 5.00
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Command Processor]
 "Autorun"="DOSKEY /MACROFILE=\"C:\\Python37\\macros.doskey\""
 
+; timestamp for CMD prompt
+; Prompt options/variables
+; https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/prompt
+[HKEY_CURRENT_USER\Environment] 
+"PROMPT"="$t $p$g "
 
 ; Show the missing option in power profile setting
 ; Console lock display off timeout is the amount of minutes Windows will wait idle with no activity while on the lock screen 
