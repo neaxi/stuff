@@ -69,6 +69,12 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias ls='ls --color=auto'
+alias cd..="cd .."
+alias ..="cd .."
+alias ...="cd ../.."
+alias md="mkdir -p"
+alias gti="git"
+alias dcoker="docker"
 
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
